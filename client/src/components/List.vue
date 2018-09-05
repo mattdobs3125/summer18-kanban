@@ -15,9 +15,36 @@
 
 <script>
   export default {
-    name: 'List'
-  }
-</script>
+    name: "task",
+    created() {
+      //blocks users not logged in
+      if (!this.$store.state.user._id) {
+        this.$router.push({ name: "login" });
+      }
+    },
+    data() {
+      return {
+        newTask: {
+          title: "",
+          description: ""
+        }
+      };
+    },
+    computed: {
+      tasks() {
+        return this.$store.state.tasks;
+      }
+    },
+    methods: {
+      addTask() {
+        this.$store.dispatch("addTask", this.newTask);
+        this.newTask = { title: "", description: "" };
+      },
+      deleteTask(taskId) {
+        this.$store.dispatch("deleteTask", taskId);
+      }
+    }
+  };</script>
 
 <style scoped>
 </style>

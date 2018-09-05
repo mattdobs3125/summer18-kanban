@@ -19,6 +19,9 @@
 </template>
 
 <script>
+  import List from '@/components/List.vue'
+  import Task from '@/components/Task.vue'
+
   export default {
     name: "login",
     data() {

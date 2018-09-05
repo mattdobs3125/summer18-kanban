@@ -19,29 +19,32 @@
 </template>
 
 <script>
-export default {
-  name: "login",
-  data() {
-    return {
-      loginForm: true,
-      creds: {
-        email: "",
-        password: ""
-      },
-      newUser: {
-        email: "",
-        password: "",
-        name: ""
-      }
-    };
-  },
-  methods: {
-    register() {
-      this.$store.dispatch("register", this.newUser);
+  export default {
+    name: "login",
+    data() {
+      return {
+        loginForm: true,
+        creds: {
+          email: "",
+          password: ""
+        },
+        newUser: {
+          email: "",
+          password: "",
+          name: ""
+        }
+      };
     },
-    loginUser() {
-      this.$store.dispatch("login", this.creds);
+    methods: {
+      register() {
+        this.$store.dispatch("register", this.newUser);
+      },
+      loginUser() {
+        this.$store.dispatch("login", this.creds);
+      },
+      deleteUser() {
+
+      }
     }
-  }
-};
+  };
 </script>

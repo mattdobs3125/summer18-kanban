@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    WELCOME TO {{boardId}}
+    Welcome to {{boardId}}
     <form @submit.prevent="addList">
       <input type="text" placeholder="title" v-model="newList.title" required>
       <input type="text" placeholder="description" v-model="newList.description">

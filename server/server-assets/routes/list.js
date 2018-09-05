@@ -26,14 +26,22 @@ router.post('/',(req,res,next)=>{
     )
 })
 
-router.put("/:id")
-list.findById(req.params.id)
-.then( list =>{
-    list.update(req.body)
-    res.send("list has been added")
-    .catch(err=> {
-        console.log(err)})
+router.put('/:id',(req,res,next)=>{
+    list.findById(req.params.id)
+    .then(list=>{
+        list.update(req.body,(err)=>{
+            if(err){
+                console.log(err)
+                next()
+                return
+            }
+            res.send("Sucessfully added")
+        });
+    })
+    .catch(err=>{
+        console.log(err)
         next()
+    })
 })
 
 router.delete('/:id',(req,res,next)=>{

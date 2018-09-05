@@ -1,18 +1,53 @@
 <template>
   <div class="board">
-    {{boardId}}
+    WELCOME TO {{boardId}}
+    <form @submit.prevent="addList">
+      <input type="text" placeholder="title" v-model="newList.title" required>
+      <input type="text" placeholder="description" v-model="newList.description">
+      <button type="submit">Create List</button>
+    </form>
+    <div v-for="list in lists" :key="list._id">
+      <router-link :to="{name: 'list', params: {listId: list._id}}">{{list.title}}</router-link>
+      <button @click="deleteList(list._id)">Delete List</button>
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "board",
-  created() {
-    //blocks users not logged in
-    if (!this.$store.state.user._id) {
-      this.$router.push({ name: "login" });
+  export default {
+    props: ["boardId"],
+
+    name: "board",
+    created() {
+      //blocks users not logged in
+      if (!this.$store.state.user._id) {
+        this.$router.push({ name: "login" });
+      }
+    },
+    data() {
+      return {
+        newList: {
+          title: "",
+          description: ""
+        }
+      };
+    },
+    computed: {
+      lists() {
+        return this.$store.state.lists;
+      }
+    },
+    methods: {
+      addList() {
+        this.$store.dispatch("addList", this.newList);
+        this.newList = { title: "", description: "" };
+      },
+      deleteList(listId) {
+        this.$store.dispatch("deleteList", listId);
+      }
     }
-  },
-  props: ["boardId"]
-};
+  };
 </script>
+
+<style>
+</style>

@@ -24,7 +24,8 @@
       //blocks users not logged in
       if (!this.$store.state.user._id) {
         this.$router.push({ name: "login" });
-      }
+        
+      }else this.$store.dispatch('getLists',this.boardId)
     },
     data() {
       return {

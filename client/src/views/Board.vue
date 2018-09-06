@@ -43,7 +43,7 @@
     methods: {
       addList() {
         this.$store.dispatch("addList", this.newList);
-        this.newList = { title: "", description: "" };
+        // this.newList = { title: "", description: "" };
       },
       deleteList(listId) {
         this.$store.dispatch("deleteList", listId);

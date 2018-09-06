@@ -23,7 +23,7 @@
         taskTitle: ""
       };
     },
-    props: ["lists"],
+    // props: ["lists"],
     computed: {
       lists() {
         return this.$store.state.lists;

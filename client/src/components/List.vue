@@ -1,12 +1,12 @@
 <template>
   <div class="list">
-    <h2>{{listData}}</h2>
+    <h2>{{lists._id}}</h2>
     <button @click="deleteList">Delete</button>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
     </form>
     <div v-for="(value, key) in tasks" :key="key">
-      <div v-for="task in value" :key="task._id" v-if="task.listId == listData._id">
+      <div v-for="task in value" :key="task._id" v-if="task.listId == lists._id">
         <task v-bind:taskData="task" />
       </div>
     </div>
@@ -23,7 +23,7 @@
         taskTitle: ""
       };
     },
-    props: ["listData"],
+    props: ["lists"],
     computed: {
       lists() {
         return this.$store.state.lists;
@@ -40,25 +40,25 @@
     },
     methods: {
       deleteList() {
-        this.$store.dispatch("deleteList", this.listData._id);
+        this.$store.dispatch("deleteList", this.lists._id);
       },
       addTask() {
         let obj = {
           title: this.taskTitle,
-          listId: this.listData._id,
+          listId: this.lists._id,
         };
         this.$store.dispatch("addTask", obj);
       }
     },
     mounted() {
-      this.$store.dispatch("getTasks", this.listData._id);
+      this.$store.dispatch("getTasks", this.lists._id);
     }
   };
 </script>
 
 <style scoped>
   .list {
-    color: gray;
-    background-color: red;
+    color: white;
+    background-color: gray;
   }
 </style>

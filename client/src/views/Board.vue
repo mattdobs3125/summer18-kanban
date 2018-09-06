@@ -8,7 +8,7 @@
     </form>
     <div v-for="list in lists" :key="list._id">
       <router-link :to="{name: 'list', params: {listId: list._id}}">{{list.title}}</router-link>
-      <button @click="deleteList(list._id)">Delete List</button>
+      <button @click="deleteList(list)">Delete List</button>
     </div>
   </div>
 </template>
@@ -46,8 +46,8 @@
         this.$store.dispatch("addList", this.newList);
         // this.newList = { title: "", description: "" };
       },
-      deleteList(listId) {
-        this.$store.dispatch("deleteList", listId);
+      deleteList(list) {
+        this.$store.dispatch("deleteList", list);
       }
     }
   };

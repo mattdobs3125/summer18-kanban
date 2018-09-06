@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <h2>{{lists._id}}</h2>
-    <button @click="deleteList">Delete</button>
+    <button @click="deleteList">Remove</button>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
     </form>
@@ -23,7 +23,7 @@
         taskTitle: ""
       };
     },
-    props: ["lists"],
+    // props: ["lists"],
     computed: {
       lists() {
         return this.$store.state.lists;

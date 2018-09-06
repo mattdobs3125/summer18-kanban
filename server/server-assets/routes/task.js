@@ -30,7 +30,7 @@ router.put("/:id", (req, res, next) => {
                     res.status(400).send(err)
                     return
                 }
-                res.send("sucessful")
+                res.send("successful")
             });
         }
         )

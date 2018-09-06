@@ -15,6 +15,8 @@ list.find({boardId: req.params.body})
 
 
 router.post('/',(req,res,next)=>{
+    req.body.authorId = req.session.uid
+    releaseEvents.body.boardId = req.params.boardId
     list.create(req.body)
     .then(newList=>{
         res.send(newList)
@@ -25,24 +27,11 @@ router.post('/',(req,res,next)=>{
     }
     )
 })
-
 router.put('/:id',(req,res,next)=>{
-    list.findById(req.params.id)
-    .then(list=>{
-        list.update(req.body,(err)=>{
-            if(err){
-                console.log(err)
-                next()
-                return
-            }
-            res.send("Sucessfully added")
-        });
-    })
-    .catch(err=>{
-        console.log(err)
-        next()
-    })
+    list.findByIdAndUpdate(req.params.id, req.body)
+    .then(()=>res.send('success'))
 })
+
 
 router.delete('/:id',(req,res,next)=>{
     list.findById(req.params.id)

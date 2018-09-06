@@ -7,14 +7,14 @@ router.get('/:boardId', (req, res, next) => {
             res.send(data)
         })
         .catch(err => {
-            console.log(err)
+            res.status(400).send(err)
             next()
         })
 })
 
 
 
-router.post('/:boardId',(req,res,next)=>{
+router.post('/',(req,res,next)=>{
     req.body.authorId = req.session.uid
     req.body.boardId = req.params.boardId
     list.create(req.body)
@@ -22,7 +22,7 @@ router.post('/:boardId',(req,res,next)=>{
             res.send(newList)
         })
         .catch(err => {
-            console.log(err)
+            res.status(400).send(err)
             next()
         }
         )

@@ -12,7 +12,7 @@ let auth = Axios.create({
 })
 
 let api = Axios.create({
-  baseURL: "//localhost:3000/api/",
+  baseURL: "//localhost:3000/api",
   timeout: 3000,
   withCredentials: true
 })
@@ -22,7 +22,9 @@ export default new Vuex.Store({
     user: {},
     boards: [],
     activeBoard: {},
-    lists: {}
+    lists: {},
+    tasks: {},
+    comments: {}
   },
   mutations: {
     setUser(state, user) {
@@ -31,8 +33,24 @@ export default new Vuex.Store({
     setBoards(state, boards) {
       state.boards = boards
     },
-    setLists(state, lists) {
-      state.lists = lists
+    addList(state, list) {
+      Vue.set(state.lists, list._id, list)
+    },
+    addListsToState(state, listArr) {
+      let listObj = {}
+      listArr.forEach(list => {
+        listObj[list._id] = list
+      });
+      state.lists = listObj
+    },
+    deleteList(state, listId) {
+      Vue.delete(state.lists, listId)
+    },
+    addTasksToState(state, payload) {
+      Vue.set(state.tasks, payload.listId, payload.tasks)
+    },
+    addCommentsToState(state, payload) {
+      Vue.set(state.comments, payload.taskId, payload.comments)
     }
   },
   actions: {
@@ -78,23 +96,89 @@ export default new Vuex.Store({
           dispatch('getBoards')
         })
     },
-    // Lists
-    getLists({ commit, dispatch }) {
-      api.get('lists')
+    //LISTS
+    getLists({ commit, dispatch }, boardId) {
+      api.get(`board/${boardId}/lists`)
         .then(res => {
-          commit('setLists', res.data)
+          commit('addListsToState', res.data)
         })
     },
-    addList({ commit, dispatch }, listData) {
-      api.post('lists', listData)
-        .then(serverList => {
-          dispatch('getLists')
+    addList({ commit, dispatch }, obj) {
+      api.post('/lists', obj)
+        .then(res => {
+          commit('addList', res.data)
+
         })
     },
     deleteList({ commit, dispatch }, listId) {
-      api.delete('lists/' + listId)
+      api.delete(`lists/${listId}`)
         .then(res => {
-          dispatch('getLists')
+          commit('deleteList', listId)
+        })
+    },
+    //TASKS
+    addTask({ commit, dispatch }, obj) {
+      api.post('/tasks', obj)
+        .then(() => {
+          api.get(`/lists/${obj.listId}/tasks`)
+            .then(res => {
+              commit('addTasksToState', { listId: obj.listId, tasks: res.data })
+            })
+        })
+    },
+    getTasks({ commit, dispatch }, listId) {
+      api.get(`/lists/${listId}/tasks`)
+        .then(res => {
+          commit('addTasksToState', { listId, tasks: res.data })
+        })
+    },
+    deleteTask({ dispatch, commit }, obj) {
+      api.delete(`/tasks/${obj.taskId}`)
+        .then(() => {
+          api.get(`/lists/${obj.listId}/tasks`)
+            .then(res => {
+              commit('addTasksToState', { listId: obj.listId, tasks: res.data })
+            })
+        })
+    },
+    changeList({ dispatch, commit }, obj) {
+      api.put(`/tasks/${obj.taskId}`, obj)
+        .then(() => {
+          api.get(`/lists/${obj.listId}/tasks`)
+            .then(res => {
+              commit('addTasksToState', { listId: obj.listId, tasks: res.data })
+            })
+        })
+        .then(() => {
+          api.get(`/lists/${obj.oldList}/tasks`)
+            .then(res => {
+              commit('addTasksToState', { listId: obj.oldList, tasks: res.data })
+            })
+        })
+    },
+    //COMMENTS
+    addComment({ dispatch, commit }, obj) {
+      api.post('/comments', obj)
+        .then(() => {
+          api.get(`/tasks/${obj.taskId}/comments`)
+            .then(res => {
+              commit('addCommentsToState', { taskId: obj.taskId, comments: res.data })
+            })
+        })
+    },
+    getComments({ dispatch, commit }, taskId) {
+      api.get(`/tasks/${taskId}/comments`)
+        .then(res => {
+          commit('addCommentsToState', { taskId, comments: res.data })
+        })
+    },
+    deleteComment({ dispatch, commit }, obj) {
+      api.delete(`/comments/${obj.commentId}`)
+        .then(() => {
+          api.get(`/tasks/${obj.taskId}/comments`)
+            .then(res => {
+              commit('addCommentsToState', { taskId: obj.taskId, comments: res.data })
+            })
         })
     }
   }

@@ -1,50 +1,65 @@
 <template>
   <div class="list">
-    Your Tasks
+    <h2>{{listData.title}}</h2>
+    <button @click="deleteList">Delete</button>
     <form @submit.prevent="addTask">
-      <input type="text" placeholder="title" v-model="newTask.title" required>
-      <input type="text" placeholder="description" v-model="newTask.description">
-      <button type="submit">Create Task</button>
+      <input type="text" required v-model="taskTitle">
     </form>
-    <div v-for="task in tasks" :key="task._id">
-      <router-link :to="{name: 'task', params: {taskId: task._id}}">{{task.title}}</router-link>
-      <button @click="deleteTask(task._id)">Delete Task</button>
+    <div v-for="(value, key) in tasks" :key="key">
+      <div v-for="task in value" :key="task._id" v-if="task.listId == listData._id">
+        <task v-bind:taskData="task" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+  import Task from "@/components/Task";
+
   export default {
-    name: "task",
-    created() {
-      //blocks users not logged in
-      if (!this.$store.state.user._id) {
-        this.$router.push({ name: "login" });
-      }
-    },
+    name: "List",
     data() {
       return {
-        newTask: {
-          title: "",
-          description: ""
-        }
+        taskTitle: ""
       };
     },
+    props: ["listData"],
     computed: {
+      lists() {
+        return this.$store.state.lists;
+      },
+      theBoardId() {
+        return this.boardId;
+      },
       tasks() {
         return this.$store.state.tasks;
       }
     },
+    components: {
+      Task
+    },
     methods: {
-      addTask() {
-        this.$store.dispatch("addTask", this.newTask);
-        this.newTask = { title: "", description: "" };
+      deleteList() {
+        this.$store.dispatch("deleteList", this.listData._id);
       },
-      deleteTask(taskId) {
-        this.$store.dispatch("deleteTask", taskId);
+      addTask() {
+        let obj = {
+          title: this.taskTitle,
+          listId: this.listData._id,
+          timestamp: Date.now()
+        };
+        this.$store.dispatch("addTask", obj);
       }
+    },
+    mounted() {
+      this.$store.dispatch("getTasks", this.listData._id);
     }
-  };</script>
+  };
+</script>
 
 <style scoped>
+  .list {
+    color: black;
+    background-color: #485fb0;
+  }
 </style>

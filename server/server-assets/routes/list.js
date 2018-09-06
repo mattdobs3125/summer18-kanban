@@ -14,7 +14,7 @@ list.find({boardId: req.params.body})
 
 
 
-router.post('/',(req,res,next)=>{
+router.post('/:boardId',(req,res,next)=>{
     req.body.authorId = req.session.uid
     req.body.boardId = req.params.boardId
     list.create(req.body)

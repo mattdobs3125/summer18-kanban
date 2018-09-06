@@ -93,8 +93,4 @@
  .comments {
   background-color: white;
  }
-
- p {
-  cursor: pointer;
- }
 </style>

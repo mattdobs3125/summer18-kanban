@@ -31,7 +31,7 @@ router.put("/:id", (req, res, next) => {
                     next()
                     return
                 }
-                res.send("sucessful")
+                res.send("successful")
             });
         }
         )

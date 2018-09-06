@@ -16,7 +16,7 @@ list.find({boardId: req.params.body})
 
 router.post('/',(req,res,next)=>{
     req.body.authorId = req.session.uid
-    releaseEvents.body.boardId = req.params.boardId
+    req.body.boardId = req.params.boardId
     list.create(req.body)
     .then(newList=>{
         res.send(newList)

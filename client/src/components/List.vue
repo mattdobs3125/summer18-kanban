@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <h2>{{listData.title}}</h2>
+    <h2>{{listData}}</h2>
     <button @click="deleteList">Delete</button>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">

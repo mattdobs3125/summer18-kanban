@@ -19,7 +19,6 @@
 
   export default {
     props: ["boardId"],
-
     name: "board",
     created() {
       //blocks users not logged in
@@ -31,7 +30,8 @@
       return {
         newList: {
           title: "",
-          description: ""
+          description: "",
+          boardId: this.boardId
         }
       };
     },

@@ -40,7 +40,7 @@
     },
     methods: {
       deleteList() {
-        this.$store.dispatch("deleteList", this.lists._id);
+        this.$store.dispatch("deleteList", this.lists.id);
       },
       addTask() {
         let obj = {

@@ -1,13 +1,13 @@
 let router = require('express').Router()
 let task = require('../models/task')
 
-router.get('/', (req, res, next) => {
-    task.find({ listId: req.params.body })
+router.get('/:listId', (req, res, next) => {
+    task.find({ listId: req.params.listId })
         .then(data => {
             res.send(data)
         })
         .catch(err => {
-            console.log(err)
+            res.status(400).send(err)
             next()
 
         })
@@ -18,7 +18,7 @@ router.post('/', (req, res, next) => {
             res.send(newTask)
         })
         .catch(err => {
-            console.log(err)
+            res.status(400).send(err)
             next()
         })
 })
@@ -27,8 +27,7 @@ router.put("/:id", (req, res, next) => {
         .then(task => {
             task.update(req.body, (err) => {
                 if (err) {
-                    console.log(err)
-                    next()
+                    res.status(400).send(err)
                     return
                 }
                 res.send("sucessful")
@@ -36,7 +35,7 @@ router.put("/:id", (req, res, next) => {
         }
         )
         .catch(err => {
-            console.log(err)
+            res.status(400).send(err)
             next()
         })
 })

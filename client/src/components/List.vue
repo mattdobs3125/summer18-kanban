@@ -46,7 +46,6 @@
         let obj = {
           title: this.taskTitle,
           listId: this.listData._id,
-          timestamp: Date.now()
         };
         this.$store.dispatch("addTask", obj);
       }
@@ -59,7 +58,7 @@
 
 <style scoped>
   .list {
-    color: black;
-    background-color: #485fb0;
+    color: gray;
+    background-color: red;
   }
 </style>

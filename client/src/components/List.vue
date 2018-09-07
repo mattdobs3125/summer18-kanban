@@ -1,6 +1,7 @@
 <template>
   <div class="list">
-    <h2>{{lists._id}}</h2>
+    <h2>{{listId}}</h2>
+    <p>this is task,vue</p>
     <button @click="deleteList">Remove</button>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
@@ -24,10 +25,10 @@
         taskTitle: ""
       };
     },
-    // props: ["lists"],
+    props: ["listId"],
     computed: {
       lists() {
-        return this.$store.state.lists;
+        return this.$store.state.lists
       },
       theBoardId() {
         return this.boardId;
@@ -52,7 +53,7 @@
       }
     },
     mounted() {
-      this.$store.dispatch("getTasks", this.lists._id);
+      this.$store.dispatch("getTasks", this.listId);
     }
   };
 </script>

@@ -110,8 +110,7 @@ export default new Vuex.Store({
           dispatch("getLists", obj.boardId)
         })
     },
-    deleteList({ commit, dispatch ,state}, list) {
-      debugger  
+    deleteList({ commit, dispatch ,state}, list) { 
       api.delete('list/'+ list._id)
         .then(res => {
           dispatch("getLists",list.boardId)
@@ -128,7 +127,7 @@ export default new Vuex.Store({
         })
     },
     getTasks({ commit, dispatch }, listId) {
-      api.get(`/list/${listId}/tasks`)
+      api.get(`/tasks/${listId}/`)
         .then(res => {
           commit('addTasksToState', { listId, tasks: res.data })
         })

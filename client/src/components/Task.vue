@@ -1,6 +1,7 @@
 <template>
  <div class="task">
   <h3>{{taskData.title}}</h3>
+  <p>this is task,vue</p>
   <select @change="changeList">
    <option selected disabled>move to a new list</option>
    <option v-for="(value, key) in lists" :key="key" :value="key" v-if="value._id != taskData.listId">{{value.title}}</option>

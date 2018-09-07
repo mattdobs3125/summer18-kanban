@@ -7,7 +7,7 @@
       <button type="submit">Create List</button>
     </form>
     <div v-for="list in lists" :key="list._id">
-      <router-link :to="{name: 'list', params: {listId: list._id}}">{{list.title}}</router-link>
+      <List :to="{name: 'list', params: {listId: list._id}}">{{list.title}}</List>
       <button @click="deleteList(list)">Delete List</button>
     </div>
   </div>
@@ -20,12 +20,13 @@
   export default {
     props: ["boardId"],
     name: "board",
+    components: { List },
     created() {
       //blocks users not logged in
       if (!this.$store.state.user._id) {
         this.$router.push({ name: "login" });
-        
-      }else this.$store.dispatch('getLists',this.boardId)
+
+      } else this.$store.dispatch('getLists', this.boardId)
     },
     data() {
       return {

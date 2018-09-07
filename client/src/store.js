@@ -44,7 +44,6 @@ export default new Vuex.Store({
       state.lists = listObj
     },
     deleteList(state, listId) {
-      debugger
       Vue.delete(state.lists, listId)
     },
     addTasksToState(state, payload) {
@@ -113,7 +112,7 @@ export default new Vuex.Store({
     deleteList({ commit, dispatch ,state}, list) { 
       api.delete('list/'+ list._id)
         .then(res => {
-          dispatch("getLists",list.boardId)
+          dispatch("getLists", list.boardId)
         })
     },
     //TASKS

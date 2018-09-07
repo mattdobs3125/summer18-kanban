@@ -7,7 +7,7 @@
       <button type="submit">Create List</button>
     </form>
     <div v-for="list in lists" :key="list._id">
-      <List :to="{name: 'list', params: {listId: list._id}}">{{list.title}}</List>
+      <List :listId="list._id">{{list.title}}</List>
       <button @click="deleteList(list)">Delete List</button>
     </div>
   </div>
@@ -21,6 +21,9 @@
     props: ["boardId"],
     name: "board",
     components: { List },
+    mounted(){
+      this.$store.dispatch("getTasks")
+    },
     created() {
       //blocks users not logged in
       if (!this.$store.state.user._id) {

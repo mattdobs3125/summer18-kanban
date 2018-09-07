@@ -1,13 +1,13 @@
 <template>
   <div class="list">
-    <h2>{{listId}}</h2>
+    <h2>{{lists}}</h2>
     <p>this is task,vue</p>
     <button @click="deleteList">Remove</button>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
       <button @click="addTask">Add Task</button>
     </form>
-    <div v-for="(value, key) in tasks" :key="key">
+    <div v-for="(value, key) in tasks[listId]" :key="key">
       <div v-for="task in value" :key="task._id" v-if="task.listId == lists._id">
         <task v-bind:taskData="task" />
       </div>
@@ -52,9 +52,7 @@
         this.$store.dispatch("addTask", obj);
       }
     },
-    mounted() {
-      this.$store.dispatch("getTasks", this.listId);
-    }
+ 
   };
 </script>
 

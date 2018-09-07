@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
 import router from './router'
+import { futimesSync } from 'fs';
 
 Vue.use(Vuex)
 
@@ -16,6 +17,20 @@ let api = Axios.create({
   timeout: 3000,
   withCredentials: true
 })
+
+function createDictionary(arr){
+  let out = {}
+  arr.forEach(item=>{
+    if(!out[item.listId]){
+      out[item.listId] = []
+      out[item.listId].push(item)
+    }else{
+      out[item.listId].push(item)
+    }
+    
+  })
+  return out
+}
 
 export default new Vuex.Store({
   state: {
@@ -47,7 +62,7 @@ export default new Vuex.Store({
       Vue.delete(state.lists, listId)
     },
     addTasksToState(state, payload) {
-      Vue.set(state.tasks, payload.listId, payload.tasks)
+      state.tasks = createDictionary(payload)
     },
     addCommentsToState(state, payload) {
       Vue.set(state.comments, payload.taskId, payload.comments)
@@ -119,16 +134,13 @@ export default new Vuex.Store({
     addTask({ commit, dispatch }, obj) {
       api.post('/tasks', obj)
         .then(() => {
-          api.get(`/list/${obj.listId}/tasks`)
-            .then(res => {
-              commit('addTasksToState', { listId: obj.listId, tasks: res.data })
-            })
+         dispatch("getTasks")
         })
     },
-    getTasks({ commit, dispatch }, listId) {
-      api.get(`/tasks/${listId}/`)
+    getTasks({ commit, dispatch }) {
+      api.get(`/tasks`)
         .then(res => {
-          commit('addTasksToState', { listId, tasks: res.data })
+          commit('addTasksToState', res.data )
         })
     },
     deleteTask({ dispatch, commit }, obj) {

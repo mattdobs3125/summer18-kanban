@@ -1,8 +1,8 @@
 let router = require('express').Router()
 let task = require('../models/task')
 
-router.get('/:listId', (req, res, next) => {
-    task.find({ listId: req.params.listId })
+router.get('/', (req, res, next) => {
+    task.find({ author: req.session.uid })
         .then(data => {
             res.send(data)
         })
@@ -13,6 +13,7 @@ router.get('/:listId', (req, res, next) => {
         })
 })
 router.post('/', (req, res, next) => {
+    req.body.author = req.session.uid   
     task.create(req.body)
         .then(newTask => {
             res.send(newTask)

@@ -47,7 +47,7 @@
       addTask() {
         let obj = {
           title: this.taskTitle,
-          listId: this.lists._id,
+          listId: this.listId,
         };
         this.$store.dispatch("addTask", obj);
       }

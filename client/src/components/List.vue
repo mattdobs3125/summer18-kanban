@@ -2,7 +2,6 @@
   <div class="list">
     <h2>{{lists}}</h2>
     <p>this is task,vue</p>
-    <button @click="deleteList">Remove</button>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
       <button @click="addTask">Add Task</button>

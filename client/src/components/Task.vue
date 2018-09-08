@@ -1,10 +1,10 @@
 <template>
  <div class="task">
-  <h3>{{taskData.title}}</h3>
+  
   <p>this is task,vue</p>
   <select @change="changeList">
    <option selected disabled>move to a new list</option>
-   <option v-for="(value, key) in lists" :key="key" :value="key" v-if="value._id != taskData.listId">{{value.title}}</option>
+   <option v-for="(value, key) in lists" :key="key" :value="key" v-if="value._id != taskData.listId"><h1>{{value.title}}</h1></option>
   </select>
   <div>
    <div v-if="!showCommentForm">
@@ -38,7 +38,7 @@
   },
   computed: {
    tasks() {
-    return this.$store.state.tasks[this.taskData.listId];
+    return this.$store.state.tasks;
    },
    comments() {
     return this.$store.state.comments;
@@ -49,9 +49,10 @@
   },
   methods: {
    deleteTask() {
+       debugger
     this.$store.dispatch("deleteTask", {
-     taskId: this.taskData._id,
-     listId: this.taskData.listId
+     taskId: this.tasks.id,
+     listId: this.lists.id
     });
    },
    addComment() {
@@ -64,6 +65,7 @@
     this.showCommentForm = false;
    },
    deleteComment(commentId) {
+       debugger 
     let obj = {
      commentId,
      taskId: this.taskData._id

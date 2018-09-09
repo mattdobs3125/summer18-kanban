@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <h2>{{lists}}</h2>
+    <!-- <h2>{{lists}}</h2> -->
     <p>this is task,vue</p>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">

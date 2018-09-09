@@ -1,6 +1,6 @@
 <template>
  <div class="task">
-  
+  <h3>this is the task data{{taskData}}</h3>
   <p>this is task,vue</p>
   <select @change="changeList">
    <option selected disabled>move to a new list</option>
@@ -51,8 +51,8 @@
    deleteTask() {
        debugger
     this.$store.dispatch("deleteTask", {
-     taskId: this.tasks.id,
-     listId: this.lists.id
+     taskId: this.tasks._id,
+     listId: this.lists._id
     });
    },
    addComment() {

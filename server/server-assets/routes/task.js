@@ -12,6 +12,7 @@ router.get('/', (req, res, next) => {
 
         })
 })
+//makes a new task
 router.post('/', (req, res, next) => {
     req.body.author = req.session.uid   
     task.create(req.body)

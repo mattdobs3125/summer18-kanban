@@ -1,6 +1,6 @@
 <template>
   <div class="board">
-    Welcome to {{boardId}}
+    Welcome to {{boardId.title}}
     <form @submit.prevent="addList">
       <input type="text" placeholder="title" v-model="newList.title" required>
       <input type="text" placeholder="description" v-model="newList.description">
@@ -21,7 +21,7 @@
     props: ["boardId"],
     name: "board",
     components: { List },
-    mounted(){
+    mounted() {
       this.$store.dispatch("getTasks")
     },
     created() {

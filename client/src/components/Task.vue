@@ -52,7 +52,7 @@
        debugger
     this.$store.dispatch("deleteTask", {
      taskId: this.taskData,
-     listId: this.lists._id
+     listId: this.lists._id 
     });
    },
    addComment() {

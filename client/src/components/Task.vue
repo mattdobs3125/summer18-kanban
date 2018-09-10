@@ -1,7 +1,7 @@
 <template>
     <div class="task">
 
-        <p>this is task,vue</p>
+        <p>{{taskData.title}}</p>
         <select @change="changeList">
             <option selected disabled>move to a new list</option>
             <option v-for="(value, key) in lists" :key="key" :value="key" v-if="value._id != taskData.listId">
@@ -52,7 +52,7 @@
         methods: {
             deleteTask() {
                 this.$store.dispatch("deleteTask", {
-                    taskId: this.taskData
+                    taskId: this.taskData._id
 
                 });
             },
@@ -83,7 +83,8 @@
             }
         },
         mounted() {
-            this.$store.dispatch("getComments", this.taskData._id);
+            // this.$store.dispatch("getComments", this.taskData._id);
+            this.$store.dispatch("getTasks")
         }
     };
 </script>

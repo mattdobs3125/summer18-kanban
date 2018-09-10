@@ -43,12 +43,11 @@ router.put("/:id", (req, res, next) => {
 })
 
 router.delete('/:id', (req, res, next) => {
-    list.findById(req.params.id)
-        .then(task => {
+  
             task.findByIdAndRemove(req.params.id)
                 .then(data => {
                     res.send('removed')
                 })
-        })
+        
 })
 module.exports = router

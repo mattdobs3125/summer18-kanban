@@ -1,11 +1,7 @@
 <template>
     <div class="task">
 
-<<<<<<< HEAD
         <p>{{taskData.title}}</p>
-=======
-        <p>task title</p>
->>>>>>> 0c347f9a4762dea658530fe32ece04b0f8129cba
         <select @change="changeList">
             <option selected disabled>move to a new list</option>
             <option v-for="(value, key) in lists" :key="key" :value="key" v-if="value._id != taskData.listId">

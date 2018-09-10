@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <!-- <h2>{{lists}}</h2> -->
-    <p>title</p>
+    <p>{{listId.title}}</p>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
       <button type='submit'>Add Task</button>
@@ -43,7 +43,6 @@
       },
       addTask() {
         let obj = {
-
           title: this.taskTitle,
           listId: this.listId
         };

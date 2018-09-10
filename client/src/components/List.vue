@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <h2>{{lists}}</h2>
+    <h2>{{lists.title}}</h2>
     
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
@@ -25,7 +25,7 @@
     props: ["listId"],
     computed: {
       lists() {
-        return this.$store.state.lists;
+        return this.$store.state.lists[this.listId];
       },
       theBoardId() {
         return this.boardId;

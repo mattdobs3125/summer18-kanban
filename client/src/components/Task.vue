@@ -51,7 +51,6 @@
         },
         methods: {
             deleteTask() {
-                debugger
                 this.$store.dispatch("deleteTask", {
                     taskId: this.taskData
 
@@ -67,7 +66,6 @@
                 this.showCommentForm = false;
             },
             deleteComment(commentId) {
-                debugger
                 let obj = {
                     commentId,
                     taskId: this.taskData._id

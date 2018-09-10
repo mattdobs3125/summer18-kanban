@@ -51,12 +51,16 @@
         this.$store.dispatch("addTask", obj);
       }
     },
- 
+
   };
 </script>
 
 <style scoped>
   .list {
+    display: flex;
+    flex-direction: column;
+    /* flex-wrap: column wrap; */
+
     color: white;
     background-color: gray;
   }

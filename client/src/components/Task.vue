@@ -10,7 +10,7 @@
         </select>
         <div>
             <div v-if="!showCommentForm">
-                <p @click="showCommentForm = !showCommentForm">add comment</p>
+                <button @click="showCommentForm = !showCommentForm">add comment</button>
             </div>
             <div v-else>
                 <form @submit.prevent="addComment">

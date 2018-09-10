@@ -6,10 +6,8 @@
       <input type="text" required v-model="taskTitle">
       <button @click="addTask">Add Task</button>
     </form>
-    <div v-for="(value, key) in tasks[listId]" :key="key">
-      <div v-for="task in value" :key="task._id" v-if="task.listId == lists._id">
-        <task v-bind:taskData="task" />
-      </div>
+    <div v-for="task in tasks" :key="task._id">
+      <task v-bind:taskData="task" />
     </div>
   </div>
 </template>
@@ -27,13 +25,13 @@
     props: ["listId"],
     computed: {
       lists() {
-        return this.$store.state.lists
+        return this.$store.state.lists;
       },
       theBoardId() {
         return this.boardId;
       },
       tasks() {
-        return this.$store.state.tasks;
+        return this.$store.state.tasks[this.listId];
       }
     },
     components: {
@@ -46,12 +44,11 @@
       addTask() {
         let obj = {
           title: this.taskTitle,
-          listId: this.listId,
+          listId: this.listId
         };
         this.$store.dispatch("addTask", obj);
       }
-    },
-
+    }
   };
 </script>
 
@@ -60,7 +57,6 @@
     display: flex;
     flex-direction: column;
     /* flex-wrap: column wrap; */
-
     color: white;
     background-color: gray;
   }

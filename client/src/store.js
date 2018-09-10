@@ -18,16 +18,16 @@ let api = Axios.create({
   withCredentials: true
 })
 
-function createDictionary(arr){
+function createDictionary(arr) {
   let out = {}
-  arr.forEach(item=>{
-    if(!out[item.listId]){
+  arr.forEach(item => {
+    if (!out[item.listId]) {
       out[item.listId] = []
       out[item.listId].push(item)
-    }else{
+    } else {
       out[item.listId].push(item)
     }
-    
+
   })
   return out
 }
@@ -124,8 +124,8 @@ export default new Vuex.Store({
           dispatch("getLists", obj.boardId)
         })
     },
-    deleteList({ commit, dispatch ,state}, list) { 
-      api.delete('list/'+ list._id)
+    deleteList({ commit, dispatch, state }, list) {
+      api.delete('list/' + list._id)
         .then(res => {
           dispatch("getLists", list.boardId)
         })
@@ -134,20 +134,19 @@ export default new Vuex.Store({
     addTask({ commit, dispatch }, obj) {
       api.post('/tasks', obj)
         .then(() => {
-         dispatch("getTasks")
+          dispatch("getTasks")
         })
     },
     getTasks({ commit, dispatch }) {
       api.get(`/tasks`)
         .then(res => {
-          commit('addTasksToState', res.data )
+          commit('addTasksToState', res.data)
         })
     },
     deleteTask({ dispatch, commit }, obj) {
-      debugger
-      api.delete("tasks/"+ obj.taskId)
+      api.delete("tasks/" + obj.taskId)
         .then(res => {
-         dispatch("getTasks")
+          dispatch("getTasks")
         })
     },
     changeList({ dispatch, commit }, obj) {

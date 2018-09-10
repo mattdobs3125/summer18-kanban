@@ -4,7 +4,7 @@
     <p>title</p>
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
-      <button @click="addTask">Add Task</button>
+      <button type='submit'>Add Task</button>
     </form>
     <div v-for="task in tasks" :key="task._id">
       <task v-bind:taskData="task" />

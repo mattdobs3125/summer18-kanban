@@ -51,8 +51,8 @@
    deleteTask() {
        debugger
     this.$store.dispatch("deleteTask", {
-     taskId: this.tasks.id,
-     listId: this.lists.id
+     taskId: this.taskData
+    
     });
    },
    addComment() {

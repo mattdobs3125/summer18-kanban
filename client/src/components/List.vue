@@ -1,7 +1,7 @@
 <template>
   <div class="list">
-    <!-- <h2>{{lists}}</h2> -->
-    <p>{{listId.title}}</p>
+    <h2>{{lists}}</h2>
+    
     <form @submit.prevent="addTask">
       <input type="text" required v-model="taskTitle">
       <button type='submit'>Add Task</button>

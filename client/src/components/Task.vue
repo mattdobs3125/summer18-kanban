@@ -83,7 +83,7 @@
             }
         },
         mounted() {
-            // this.$store.dispatch("getComments", this.taskData._id);
+            this.$store.dispatch("getComments", this.taskData._id);
             this.$store.dispatch("getTasks")
         }
     };

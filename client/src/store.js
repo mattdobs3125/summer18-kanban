@@ -91,7 +91,12 @@ export default new Vuex.Store({
           router.push({ name: 'boards' })
         })
     },
-
+    logout({commit, dispatch}){
+      auth.delete('logout')
+      .then(re=>{
+        router.push({name:'login'})
+      })
+    },
     //BOARDS
     getBoards({ commit, dispatch }) {
       api.get('boards')
@@ -152,42 +157,39 @@ export default new Vuex.Store({
     changeList({ dispatch, commit }, obj) {
       api.put(`/tasks/${obj.taskId}`, obj)
         .then(() => {
-          api.get(`/lists/${obj.listId}/tasks`)
+          api.get(`/lists/${obj.listId}`)
             .then(res => {
-              commit('addTasksToState', { listId: obj.listId, tasks: res.data })
+              commit('addTasksToState', res.data)
             })
         })
         .then(() => {
-          api.get(`/lists/${obj.oldList}/tasks`)
+          api.get(`/lists/${obj.oldList}`)
             .then(res => {
-              commit('addTasksToState', { listId: obj.oldList, tasks: res.data })
+              commit('addTasksToState', res.data)
             })
         })
     },
     //COMMENTS
-    addComment({ dispatch, commit }, obj) {
-      api.post('/comments', obj)
+    addComment({ state, dispatch, commit }, obj) {
+      api.post('tasks/'+obj.taskId+'/comments',obj.description)
         .then(() => {
-          api.get(`/tasks/${obj.taskId}/comments`)
-            .then(res => {
-              commit('addCommentsToState', { taskId: obj.taskId, comments: res.data })
-            })
+         dispatch('getTasks')
         })
     },
-    getComments({ dispatch, commit }, taskId) {
-      api.get(`/tasks/${taskId}/comments`)
-        .then(res => {
-          commit('addCommentsToState', { taskId, comments: res.data })
-        })
-    },
-    deleteComment({ dispatch, commit }, obj) {
-      api.delete(`/comments/${obj.commentId}`)
-        .then(() => {
-          api.get(`/tasks/${obj.taskId}/comments`)
-            .then(res => {
-              commit('addCommentsToState', { taskId: obj.taskId, comments: res.data })
-            })
-        })
-    }
-  }
-})
+//     getComments({ dispatch, commit }, taskId) {
+//       api.get(`/tasks/${taskId}/comments`)
+//         .then(res => {
+//           commit('addCommentsToState', { taskId, comments: res.data })
+//         })
+//     },
+//     deleteComment({ dispatch, commit }, obj) {
+//       api.delete(`/comments/${obj.commentId}`)
+//         .then(() => {
+//           api.get(`/tasks/${obj.taskId}/comments`)
+//             .then(res => {
+//               commit('addCommentsToState', { taskId: obj.taskId, comments: res.data })
+//             })
+//         })
+//     }
+//   }
+// })

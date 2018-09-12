@@ -9,8 +9,8 @@
             </option>
         </select>
         <div>
-            <div v-if="!showCommentForm">
-                <button @click="showCommentForm = !showCommentForm">add comment</button>
+            <div v-if="showCommentForm">
+                <button @click="addComment">add comment</button>
             </div>
             <div v-else>
                 <form @submit.prevent="addComment">
@@ -57,13 +57,14 @@
                 });
             },
             addComment() {
+                debugger
                 let obj = {
                     description: this.commentDescription,
                     taskId: this.taskData._id,
                 };
                 this.$store.dispatch("addComment", obj);
                 this.commentDescription = "";
-                this.showCommentForm = false;
+                // this.showCommentForm = false;
             },
             deleteComment(commentId) {
                 let obj = {

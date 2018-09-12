@@ -50,4 +50,10 @@ router.delete('/:id', (req, res, next) => {
                 })
         
 })
+
+//comments
+
+
+
+
 module.exports = router

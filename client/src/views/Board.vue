@@ -1,6 +1,10 @@
 <template>
   <div class="board">
-    Welcome to {{boardId.title}}
+    <h2>
+    Welcome to 
+    </h2>
+
+    <button @click="logOut()">Logout</button>
     <form @submit.prevent="addList">
       <input type="text" placeholder="title" v-model="newList.title" required>
       <input type="text" placeholder="description" v-model="newList.description">
@@ -46,6 +50,13 @@
       }
     },
     methods: {
+      logOut(){
+        this.$store.dispatch("logout")
+        this.$store.state.user._id = ""
+        this.$store.state.boards = []
+      },
+
+
       addList() {
         this.$store.dispatch("addList", this.newList);
         // this.newList = { title: "", description: "" };

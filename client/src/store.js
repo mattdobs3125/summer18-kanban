@@ -169,27 +169,24 @@ export default new Vuex.Store({
             })
         })
     },
-    //COMMENTS
-    addComment({ state, dispatch, commit }, obj) {
-      api.post('tasks/'+obj.taskId+'/comments',obj.description)
-        .then(() => {
-         dispatch('getTasks')
-        })
+    
+    // comments
+    // @ts-ignore
+    deleteComment({dispatch,commit},obj){
+      api.delete(`/tasks/${obj.taskId}/comments/${obj.commentId}`)
+      .then(res=>{
+        dispatch("getTasks")
+      })
     },
-//     getComments({ dispatch, commit }, taskId) {
-//       api.get(`/tasks/${taskId}/comments`)
-//         .then(res => {
-//           commit('addCommentsToState', { taskId, comments: res.data })
-//         })
-//     },
-//     deleteComment({ dispatch, commit }, obj) {
-//       api.delete(`/comments/${obj.commentId}`)
-//         .then(() => {
-//           api.get(`/tasks/${obj.taskId}/comments`)
-//             .then(res => {
-//               commit('addCommentsToState', { taskId: obj.taskId, comments: res.data })
-//             })
-//         })
-//     }
-//   }
-// })
+    addComment({dispatch, commit }, obj) {
+      console.log(obj.newComment)
+      api.post(`/tasks/${obj.taskId}/comments`, obj.newComment)
+      .then(res=>
+        {
+          console.log(res)
+          dispatch("getTasks")
+        })
+        
+      }
+    }
+  })

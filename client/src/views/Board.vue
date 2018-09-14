@@ -1,8 +1,9 @@
 <template>
-  <div class="board">
+  <div class="board row">
     <h2>
     Welcome to 
     </h2>
+<div class="col-12">
 
     <button @click="logOut()">Logout</button>
     <form @submit.prevent="addList">
@@ -10,7 +11,8 @@
       <input type="text" placeholder="description" v-model="newList.description">
       <button type="submit">Create List</button>
     </form>
-    <div v-for="list in lists" :key="list._id">
+</div>
+    <div class="list" v-for="list in lists" :key="list._id">
       <List :listId="list._id">{{list.title}}</List>
       <button @click="deleteList(list)">Delete List</button>
     </div>
@@ -69,4 +71,9 @@
 </script>
 
 <style>
+.list{
+  padding: 5rem;
+}
+
+
 </style>
